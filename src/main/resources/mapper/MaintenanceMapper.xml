@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.making.modules.dao.MaintenanceDao" >
+
+
+    <select id="getMaintenance" resultType="com.example.making.modules.entity.MaintenanceEntity" parameterType="com.example.making.modules.entity.MaintenanceEntity">
+        select * from sys_maintenance
+        <where>
+            <if test="entity.taskName != null and entity.taskName != '' ">and task_name like concat('%',#{entity.taskName},'%')</if>
+            <if test="entity.status != null">and status =#{entity.status}</if>
+            <if test="entity.uid != null">and uid =#{entity.uid}</if>
+        </where>
+            order by id desc
+    </select>
+
+    <select id="getMaintenance1" resultType="com.example.making.modules.entity.MaintenanceEntity" parameterType="com.example.making.modules.entity.MaintenanceEntity">
+        select * from sys_maintenance
+        <where>
+            <if test="entity.taskName != null and entity.taskName != '' ">and task_name like concat('%',#{entity.taskName},'%')</if>
+            <if test="entity.status != null">and status =#{entity.status}</if>
+            <if test="entity.uid != null">and find_in_set(#{entity.uid},p_id)</if>
+        </where>
+        order by id desc
+    </select>
+
+
+
+    <update id="updatestatus" parameterType="int">
+        update sys_maintenance set status =#{status} where id =#{mid}
+    </update>
+
+</mapper>

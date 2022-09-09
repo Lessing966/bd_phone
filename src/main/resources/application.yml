@@ -1,0 +1,57 @@
+server:
+  port: 8084
+  servlet:
+    # Ӧ�õķ���·��
+    context-path: /
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  typeAliasesPackage: com.example.making.modules.*.entity
+  global-config:
+    #���ݿ��������
+    db-config:
+      #��������  AUTO:"���ݿ�ID����", INPUT:"�û�����ID", ID_WORKER:"ȫ��ΨһID (��������ΨһID)", UUID:"ȫ��ΨһID UUID";
+      id-type: AUTO
+      #�ֶβ��� IGNORED:"�����ж�",NOT_NULL:"�� NULL �ж�"),NOT_EMPTY:"�ǿ��ж�"
+      field-strategy: NOT_NULL
+      db-column-underline: true  # �շ��»���ת��
+      refresh-mapper: true
+      logic-delete-value: 1  # �߼�ɾ������
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+
+spring:
+  redis:
+    open: true  # �Ƿ���redis����  true����   false�ر�
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 6000ms  # ���ӳ�ʱʱ�������룩
+    lettuce:
+      pool:
+        max-active: 1000  # ���ӳ������������ʹ�ø�ֵ��ʾû�����ƣ�
+        max-wait: -1ms    # ���ӳ���������ȴ�ʱ�䣨ʹ�ø�ֵ��ʾû�����ƣ�
+        max-idle: 10      # ���ӳ��е�����������
+        min-idle: 5       # ���� ���е���С��������  192.168.7.252   123456  81.68.169.83   jyq121522$    /usr/local/nginx/img   http://124.221.255.113/img/
+  datasource:
+    url: jdbc:mysql://124.221.255.113:3306/making?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Hongkong&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+      connection-timeout: 30000
+      maximum-pool-size: 100
+      max-lifetime: 1800000
+      minimum-idle: 5
+
+
+local:
+  path: /usr/local/nginx/img
+  url: http://124.221.255.113/img/

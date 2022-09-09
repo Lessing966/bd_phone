@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.making.modules.dao.WarrantyDao" >
+
+    <select id="getWarranty" resultType="com.example.making.modules.entity.WarrantyEntity" parameterType="com.example.making.modules.entity.WarrantyEntity">
+        select * from sys_warranty
+        <where>
+            <if test="entity.wname != null and entity.wname != '' ">and wname like concat('%',#{entity.wname},'%')</if>
+            <if test="entity.status != null">and status =#{entity.status}</if>
+            <if test="entity.uid != null">and uid =#{entity.uid}</if>
+        </where>
+            order by id desc
+    </select>
+
+    <select id="getWarrantyByid" resultType="com.example.making.modules.dto.WarrMainOneDTO" parameterType="int">
+        SELECT
+        w.id,
+        w.location,
+        w.wname,
+        w.describes,
+        w.scene_urlone,
+        w.scene_urltwo,
+        m.id mid,
+        m.task_sn,
+        m.`status`,
+        m.update_time time,
+        m.task_urlone,
+        m.task_urltwo,
+        m.task,
+        m.p_id pid,
+        m.mp3url,
+        m.duration
+        FROM
+        sys_warranty w
+        LEFT JOIN sys_maintenance m ON w.m_id = m.id
+        WHERE
+            w.id = #{id}
+    </select>
+
+
+    <update id="updateMidByid" parameterType="int">
+        update  sys_warranty set m_id = #{id} where id =#{wid}
+    </update>
+
+
+    <select id="getWarrList" resultType="com.example.making.modules.entity.WarrantyEntity" parameterType="com.example.making.modules.entity.WarrantyEntity">
+        select * from sys_warranty
+        <where>
+            <if test="entity.wname != null and entity.wname != '' ">and wname like concat('%',#{entity.wname},'%')</if>
+            <if test="entity.describeStatus == null">and describe_status = 0</if>
+            <if test="entity.mId ==null ">and  m_id =0</if>
+        </where>
+    </select>
+
+    <update id="updatestatus" parameterType="int">
+        update sys_warranty set status =#{status} where id =#{wid}
+    </update>
+
+</mapper>
